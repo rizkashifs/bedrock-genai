@@ -2,64 +2,64 @@ Repo with the Backend structure of a Typical GenAI Rag App using Bedrock
 
 # Repo Structure
 bedrock_genai/
-|
-+- app/
-| +- init.py
-| +- models/
-| | +- init.py
-| | +- bedrock_client.py
-| | +- dynamodb.py
-| | +- s3.py
-| | +- user.py
-| | +- session.py
-| |
-| +- services/
-| | +- init.py
-| | +- chat_engine.py
-| | +- document_processing.py
-| | +- retrieval.py
-| | +- feature.py
-| | +- history.py
-| |
-| +- utils/
-| | +- init.py
-| | +- util.py # logger, constants
-| | +- helpers.py # generic helper functions
-| |
-| +- handlers/
-| | +- init.py
-| | +- chat_handler.py
-| | +- ingestion_handler.py
-| |
-| +- prompts/
-| | +- system_prompts.json
-| |
-| +- testdocs/
-| | +- sample_doc.pdf
-| | +- test.pdf
-| | +- test.csv
-| | +- test.png
-| |
-| +- tests/
-| +- init.py
-| +- test_chat.py
-| +- test_document_processing.py
-| +- test_feature.py
-| +- test_history.py
-| +- test_image.py
-|
-+- infrastructure/
-| +- cloudFormation.yaml
-|
-+- scripts/
-| +- run_local.py
-| +- invoke_core_lambda.py
-| +- cognito_lambda.py
-|
-+- requirements.txt
-+- .gitignore
-+- .env.example
-+- README.md
+├── app/
+│   ├── __init__.py
+│   │
+│   ├── 🔧 models/
+│   │   ├── __init__.py
+│   │   ├── bedrock_client.py      # AWS Bedrock integration
+│   │   ├── dynamodb.py            # DynamoDB data layer
+│   │   ├── s3.py                  # S3 storage operations
+│   │   ├── user.py                # User management
+│   │   └── session.py             # Session handling
+│   │
+│   ├── ⚙️ services/
+│   │   ├── __init__.py
+│   │   ├── chat_engine.py         # Chat functionality engine
+│   │   ├── document_processing.py # Document ingestion & processing
+│   │   ├── retrieval.py           # Information retrieval service
+│   │   ├── feature.py             # Feature management
+│   │   └── history.py             # Chat history management
+│   │
+│   ├── 🛠️ utils/
+│   │   ├── __init__.py
+│   │   ├── util.py                # Logger, constants
+│   │   └── helpers.py             # Generic helper functions
+│   │
+│   ├── 🎯 handlers/
+│   │   ├── __init__.py
+│   │   ├── chat_handler.py        # Chat request handling
+│   │   └── ingestion_handler.py   # Document ingestion handling
+│   │
+│   ├── 💬 prompts/
+│   │   └── system_prompts.json    # System prompt templates
+│   │
+│   ├── 📄 testdocs/
+│   │   ├── sample_doc.pdf
+│   │   ├── test.pdf
+│   │   ├── test.csv
+│   │   └── test.png
+│   │
+│   └── 🧪 tests/
+│       ├── __init__.py
+│       ├── test_chat.py               # Chat functionality tests
+│       ├── test_document_processing.py # Document processing tests
+│       ├── test_feature.py            # Feature tests
+│       ├── test_history.py            # History management tests
+│       └── test_image.py              # Image processing tests
+│
+├── ☁️ infrastructure/
+│   └── cloudFormation.yaml        # AWS CloudFormation templates
+│
+├── 🔧 scripts/
+│   ├── run_local.py               # Local development server
+│   ├── invoke_core_lambda.py      # Lambda function invoker
+│   └── cognito_lambda.py          # Cognito authentication scripts
+│
+├── requirements.txt           # Python dependencies
+├── .gitignore                # Git ignore patterns
+├── .env.example              # Environment variables template
+└── README.md                 # Project documentation
 
 
 # Document Processing
