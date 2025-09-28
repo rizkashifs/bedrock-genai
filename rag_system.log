@@ -1,0 +1,22 @@
+2025-09-28 19:45:51,579 - app.util - INFO - Using model: us.anthropic.claude-3-5-haiku-20241022-v1:0
+2025-09-28 19:45:53,276 - app.util - INFO - Starting Document Processing...
+2025-09-28 19:45:53,277 - app.util - INFO - === Bedrock RAG POC Test ===
+2025-09-28 19:45:53,277 - app.util - INFO - Processing: C:\Users\admin\Downloads\bedrock-testing\app\testdocs\\test.csv
+2025-09-28 19:45:53,291 - app.util - INFO - Model Type Unknown: haiku. No row limit applied.
+2025-09-28 19:45:53,291 - app.util - INFO - CSV loaded with 29 rows and 1 columns
+2025-09-28 19:45:53,298 - app.util - INFO - CSV processed: 29 rows, 1 columns
+2025-09-28 19:45:53,299 - app.util - INFO - Successfully processed: C:\Users\admin\Downloads\bedrock-testing\app\testdocs\\test.csv
+2025-09-28 19:45:53,299 - app.util - INFO - Stored 1 items in vector store
+2025-09-28 19:45:53,300 - app.util - INFO - === Testing RAG Query ===
+2025-09-28 19:45:57,389 - app.util - INFO - A: Based on the CSV data, this document appears to be about housing information, likely from a specific geographic region. The columns include details such as longitude, latitude, housing median age, total rooms, total bedrooms, population, households, median income, and median house value. It seems to be a dataset containing various housing and demographic characteristics for different locations.
+2025-09-28 20:44:17,261 - app.utils.util - INFO - Using model: us.anthropic.claude-3-5-haiku-20241022-v1:0
+2025-09-28 20:44:18,130 - app.utils.util - INFO - Starting Document Processing...
+2025-09-28 20:44:18,131 - app.utils.util - INFO - === Bedrock RAG POC Test ===
+2025-09-28 20:44:18,131 - app.utils.util - INFO - Processing: C:\Users\admin\Downloads\bedrock-testing\app\testdocs\\test.csv
+2025-09-28 20:44:18,134 - app.utils.util - INFO - Model Type Unknown: haiku. No row limit applied.
+2025-09-28 20:44:18,135 - app.utils.util - INFO - CSV loaded with 29 rows and 1 columns
+2025-09-28 20:44:18,137 - app.utils.util - INFO - CSV processed: 29 rows, 1 columns
+2025-09-28 20:44:18,138 - app.utils.util - INFO - Successfully processed: C:\Users\admin\Downloads\bedrock-testing\app\testdocs\\test.csv
+2025-09-28 20:44:18,138 - app.utils.util - INFO - Stored 1 items in vector store
+2025-09-28 20:44:18,138 - app.utils.util - INFO - === Testing RAG Query ===
+2025-09-28 20:44:21,895 - app.utils.util - INFO - A: Based on the CSV data, this document appears to be about housing information, likely from a specific geographic region. The columns include details such as longitude, latitude, housing median age, total rooms, total bedrooms, population, households, median income, and median house value. It seems to be a dataset containing various housing and demographic characteristics for different locations.

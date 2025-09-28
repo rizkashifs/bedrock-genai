@@ -2,7 +2,7 @@ import boto3
 import os
 from dotenv import load_dotenv
 import json
-from util import logger, modelId
+from app.utils.util import logger, modelId
 
 # Load environment variables first
 load_dotenv()

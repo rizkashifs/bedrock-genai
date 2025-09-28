@@ -7,9 +7,9 @@ import json
 import base64
 
 # Assuming 'util.py' exists and provides 'logger' and 'modelId'
-# Make sure your current directory or PYTHONPATH includes the location of 'util.py' and 'bedrock_client.py'
-from util import logger, modelId
-from bedrock_client import invoke_claude_messages # Import the function you provided
+
+from app.utils.util import logger, modelId
+from app.models.bedrock_client import invoke_claude_messages # Import the function you provided
 
 # --- Configuration ---
 IMAGE_PATH = r"C:\Users\admin\Downloads\bedrock-testing\app\test.png" #  UPDATE THIS PATH 
@@ -132,6 +132,4 @@ def test_image_invocation():
 
 
 if __name__ == "__main__":
-    # Ensure environment is loaded and client setup in bedrock_client.py is executed
-    # Assuming the setup in your bedrock_client.py runs on import or is handled correctly.
     test_image_invocation()

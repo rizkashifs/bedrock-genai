@@ -7,9 +7,9 @@ from pathlib import Path
 import fitz  # PyMuPDF library
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from bedrock_client import invoke_claude, invoke_claude_messages, bedrock
+from app.models.bedrock_client import invoke_claude, invoke_claude_messages, bedrock
 import re
-from util import logger, get_max_rows, modelType as model_type, modelId
+from app.utils.util import logger, get_max_rows, modelType as model_type, modelId
 import time
 import numpy as np
 #Async library imports
@@ -29,8 +29,9 @@ from langchain_core.embeddings import Embeddings
 # Test logger
 logger.info("Starting Document Processing...")
 
-# Simple embedding storage using Titan Embeddings
+# Simple embedding storage using Titan Embeddings for Local Run
 simple_vector_store = []
+
 executor = ThreadPoolExecutor(max_workers=10)  # or dynamically passed
 max_rows = get_max_rows(model_type)
 
@@ -666,7 +667,7 @@ def test_rag_system(question: str = "What is the document about?"):
     
     # Example usage
     test_files = [
-        r"C:\Users\admin\Downloads\bedrock-testing\app\testdocs\\test.png", 
+        r"C:\Users\admin\Downloads\bedrock-testing\app\testdocs\\test.csv", 
         #"sample.jpg", 
         #"sample.csv" 
     ]

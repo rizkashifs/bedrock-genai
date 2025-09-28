@@ -6,7 +6,7 @@ Integrates with DynamoDB for persistent conversation history.
 """
 
 from typing import List, Dict, Optional, Any, Literal
-from bedrock_client import invoke_claude
+from app.models.bedrock_client import invoke_claude
 import json
 import os
 import uuid

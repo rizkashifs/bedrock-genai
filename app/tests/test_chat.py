@@ -8,7 +8,7 @@
 
 
 import argparse
-from chat import ChatEngine, get_system_prompt
+from app.services.chat_engine import ChatEngine, get_system_prompt
 
 
 def run_quick_test(prompt='qna'):
