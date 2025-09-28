@@ -2,64 +2,64 @@ Repo with the Backend structure of a Typical GenAI Rag App using Bedrock
 
 # Repo Structure
 bedrock_genai/
-│
-├─ app/
-│ ├─ init.py
-│ ├─ models/
-│ │ ├─ init.py
-│ │ ├─ bedrock_client.py
-│ │ ├─ dynamodb.py
-│ │ ├─ s3.py
-│ │ ├─ user.py
-│ │ └─ session.py
-│ │
-│ ├─ services/
-│ │ ├─ init.py
-│ │ ├─ chat_engine.py
-│ │ ├─ document_processing.py
-│ │ ├─ retrieval.py
-│ │ ├─ feature.py
-│ │ └─ history.py
-│ │
-│ ├─ utils/
-│ │ ├─ init.py
-│ │ ├─ util.py # logger, constants
-│ │ └─ helpers.py # generic helper functions
-│ │
-│ ├─ handlers/
-│ │ ├─ init.py
-│ │ ├─ chat_handler.py
-│ │ └─ ingestion_handler.py
-│ │
-│ ├─ prompts/
-│ │ └─ system_prompts.json
-│ │
-│ ├─ testdocs/
-│ │ ├─ sample_doc.pdf
-│ │ ├─ test.pdf
-│ │ ├─ test.csv
-│ │ └─ test.png
-│ │
-│ └─ tests/
-│ ├─ init.py
-│ ├─ test_chat.py
-│ ├─ test_document_processing.py
-│ ├─ test_feature.py
-│ ├─ test_history.py
-│ └─ test_image.py
-│
-├─ infrastructure/
-│ └─ cloudFormation.yaml
-│
-├─ scripts/
-│ ├─ run_local.py
-│ ├─ invoke_core_lambda.py
-│ └─ cognito_lambda.py
-│
-├─ requirements.txt
-├─ .gitignore
-├─ .env.example
-└─ README.md
+|
++- app/
+| +- init.py
+| +- models/
+| | +- init.py
+| | +- bedrock_client.py
+| | +- dynamodb.py
+| | +- s3.py
+| | +- user.py
+| | +- session.py
+| |
+| +- services/
+| | +- init.py
+| | +- chat_engine.py
+| | +- document_processing.py
+| | +- retrieval.py
+| | +- feature.py
+| | +- history.py
+| |
+| +- utils/
+| | +- init.py
+| | +- util.py # logger, constants
+| | +- helpers.py # generic helper functions
+| |
+| +- handlers/
+| | +- init.py
+| | +- chat_handler.py
+| | +- ingestion_handler.py
+| |
+| +- prompts/
+| | +- system_prompts.json
+| |
+| +- testdocs/
+| | +- sample_doc.pdf
+| | +- test.pdf
+| | +- test.csv
+| | +- test.png
+| |
+| +- tests/
+| +- init.py
+| +- test_chat.py
+| +- test_document_processing.py
+| +- test_feature.py
+| +- test_history.py
+| +- test_image.py
+|
++- infrastructure/
+| +- cloudFormation.yaml
+|
++- scripts/
+| +- run_local.py
+| +- invoke_core_lambda.py
+| +- cognito_lambda.py
+|
++- requirements.txt
++- .gitignore
++- .env.example
++- README.md
 
 
 # Document Processing
