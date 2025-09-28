@@ -19,7 +19,7 @@ bedrock_genai/
 │ │ ├─ document_processing.py
 │ │ ├─ retrieval.py
 │ │ ├─ feature.py
-│ │ ├─ history.py
+│ │ └─ history.py
 │ │
 │ ├─ utils/
 │ │ ├─ init.py
@@ -29,15 +29,15 @@ bedrock_genai/
 │ ├─ handlers/
 │ │ ├─ init.py
 │ │ ├─ chat_handler.py
-│ │ ├─ ingestion_handler.py
+│ │ └─ ingestion_handler.py
 │ │
 │ ├─ prompts/
 │ │ └─ system_prompts.json
 │ │
 │ ├─ testdocs/
-│ │ └─ sample_doc.pdf
-│ │ └─ test.pdf
-│ │ └─ test.csv
+│ │ ├─ sample_doc.pdf
+│ │ ├─ test.pdf
+│ │ ├─ test.csv
 │ │ └─ test.png
 │ │
 │ └─ tests/
@@ -53,7 +53,7 @@ bedrock_genai/
 │
 ├─ scripts/
 │ ├─ run_local.py
-│ └─ invoke_core_lambda.py
+│ ├─ invoke_core_lambda.py
 │ └─ cognito_lambda.py
 │
 ├─ requirements.txt
