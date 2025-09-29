@@ -447,59 +447,6 @@ def search_content(query: str, top_k: int = 2) -> str:
     
     return "\n\n---\n\n".join(relevant_content)
 
-def search_content_numpy(query: str, top_k: int = 3) -> str:
-    """Semantic search using Titan embeddings with optimized retrieval"""
-    # Time monitoring for Retrieval
-    retrieval_start_time = time.time()
-    logger.info("Starting retrieval process")
-    
-    if not simple_vector_store:
-        logger.warning("No content stored yet")
-        return "No content stored yet."
-    
-    # Get query embedding using Titan
-    query_embedding = get_titan_embedding(query)
-    if query_embedding is None:
-        logger.error("Error creating query embedding")
-        return "Error creating query embedding."
-    
-    # Vectorized similarity calculation (much faster than sklearn loop)
-    embeddings_matrix = np.array([item['embedding'] for item in simple_vector_store])
-    query_embedding_array = np.array(query_embedding).reshape(1, -1)
-    
-    # Calculate all similarities at once using numpy
-    similarities_scores = np.dot(embeddings_matrix, query_embedding_array.T).flatten()
-    norms = np.linalg.norm(embeddings_matrix, axis=1) * np.linalg.norm(query_embedding_array)
-    similarities_scores = similarities_scores / norms
-    
-    # Early termination if we find very high similarity matches (>0.95)
-    high_similarity_threshold = 0.95
-    high_similarity_indices = np.where(similarities_scores > high_similarity_threshold)[0]
-    
-    if len(high_similarity_indices) > 0:
-        logger.info(f"Found {len(high_similarity_indices)} high-similarity matches (>{high_similarity_threshold}), using early termination")
-        # Use only high similarity matches, sorted by score
-        sorted_indices = high_similarity_indices[np.argsort(-similarities_scores[high_similarity_indices])]
-        top_indices = sorted_indices[:min(top_k, len(sorted_indices))]
-    else:
-        # Get top_k indices without sorting everything (partial sort)
-        top_indices = np.argpartition(similarities_scores, -top_k)[-top_k:]
-        top_indices = top_indices[np.argsort(-similarities_scores[top_indices])]
-    
-    retrieval_end_time = time.time()
-    retrieval_duration = retrieval_end_time - retrieval_start_time
-    logger.info(f"Retrieval completed in {retrieval_duration:.2f} seconds")
-    
-    # Build results
-    relevant_content = []
-    for idx in top_indices:
-        item = simple_vector_store[idx]
-        similarity = similarities_scores[idx]
-        relevant_content.append(f"From {item['source']} ({item['file_type']}):\n{item['content'][:2000]}...")
-        logger.info(f"Match: {item['source']} (similarity: {similarity:.3f})")
-    
-    return "\n\n---\n\n".join(relevant_content)
-
 def create_rag_prompt(user_question: str, context: str) -> str:
     """Create a simple RAG prompt template"""
     prompt = f"""Based on the following context information, please answer the user's question.
