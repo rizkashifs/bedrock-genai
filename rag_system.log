@@ -2,3 +2,31 @@
 2025-09-29 16:47:45,922 - app.utils.util - INFO - Using model: us.anthropic.claude-3-5-haiku-20241022-v1:0
 2025-09-29 16:48:22,159 - app.utils.util - INFO - Using model: us.anthropic.claude-3-5-haiku-20241022-v1:0
 2025-09-29 16:48:42,991 - app.utils.util - INFO - Using model: us.anthropic.claude-3-5-haiku-20241022-v1:0
+2025-10-04 00:17:37,169 - app.utils.util - INFO - Using model: us.anthropic.claude-3-5-haiku-20241022-v1:0
+2025-10-04 00:17:37,706 - app.utils.util - INFO - Starting Multimodal Image Invocation Test...
+2025-10-04 00:17:37,707 - app.utils.util - ERROR - Image file not found at: C:\Users\admin\Downloads\bedrock-testing\app\test.png
+2025-10-04 00:18:17,285 - app.utils.util - INFO - Using model: us.anthropic.claude-3-5-haiku-20241022-v1:0
+2025-10-04 00:18:17,494 - app.utils.util - INFO - Starting Multimodal Image Invocation Test...
+2025-10-04 00:18:17,504 - app.utils.util - INFO - Image loaded as bytes: C:\Users\admin\Downloads\bedrock-testing\app\testdocs\test.png
+2025-10-04 00:18:17,504 - app.utils.util - WARNING - Failed to print debug payload: Object of type bytes is not JSON serializable
+2025-10-04 00:18:17,505 - app.utils.util - INFO - Invoking Claude with question: Describe the contents of this image and identify any text you see.
+2025-10-04 00:18:19,969 - app.utils.util - ERROR - Claude invocation failed: An error occurred (ValidationException) when calling the Converse operation: This model doesn't support the image content block that you provided. Update the content block and try again.
+2025-10-04 00:18:19,969 - app.utils.util - INFO - --- CLAUDE RESPONSE ---
+2025-10-04 00:18:19,970 - app.utils.util - INFO - -----------------------
+2025-10-04 00:21:51,792 - app.utils.util - INFO - Using model: us.anthropic.claude-3-haiku-20240307-v1:0
+2025-10-04 00:21:52,133 - app.utils.util - INFO - Starting Multimodal Image Invocation Test...
+2025-10-04 00:21:52,135 - app.utils.util - INFO - Image loaded as bytes: C:\Users\admin\Downloads\bedrock-testing\app\testdocs\test.png
+2025-10-04 00:21:52,135 - app.utils.util - WARNING - Failed to print debug payload: Object of type bytes is not JSON serializable
+2025-10-04 00:21:52,135 - app.utils.util - INFO - Invoking Claude with question: Describe the contents of this image and identify any text you see.
+2025-10-04 00:21:58,384 - app.utils.util - INFO - --- CLAUDE RESPONSE ---
+2025-10-04 00:21:58,385 - app.utils.util - INFO - -----------------------
+2025-11-20 11:19:53,500 - app.utils.util - INFO - Using model: us.anthropic.claude-3-haiku-20240307-v1:0
+2025-11-20 11:19:54,446 - httpx - INFO - HTTP Request: POST http://testserver/chat "HTTP/1.1 200 OK"
+2025-11-20 11:26:53,080 - app.utils.util - INFO - Using model: us.anthropic.claude-3-haiku-20240307-v1:0
+2025-11-20 11:27:56,895 - app.utils.util - INFO - Using model: us.anthropic.claude-3-haiku-20240307-v1:0
+2025-11-20 11:29:04,527 - app.utils.util - INFO - Using model: us.anthropic.claude-3-haiku-20240307-v1:0
+2025-11-20 11:32:00,740 - app.utils.util - INFO - Using model: us.anthropic.claude-3-haiku-20240307-v1:0
+2025-11-20 11:32:07,370 - app.utils.util - INFO - Starting Document Processing...
+2025-11-20 11:32:07,427 - app.utils.util - INFO - Starting retrieval process
+2025-11-20 11:32:07,427 - app.utils.util - WARNING - No content stored yet
+2025-11-20 11:32:07,429 - httpx - INFO - HTTP Request: POST http://testserver/chat "HTTP/1.1 200 OK"

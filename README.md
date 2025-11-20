@@ -1,108 +1,108 @@
-Repo with the Backend structure of a Typical GenAI Rag App using Bedrock
+# Bedrock RAG FastAPI Application
 
-# Repo Structure  
-bedrock_genai/  
-├── app/  
-│   ├── __init__.py  
-│   │  
-│   ├── 🔧 models/  
-│   │   ├── __init__.py  
-│   │   ├── bedrock_client.py      # AWS Bedrock integration  
-│   │   ├── dynamodb.py            # DynamoDB data layer  
-│   │   ├── s3.py                  # S3 storage operations  
-│   │   ├── user.py                # User management  
-│   │   └── session.py             # Session handling  
-│   │  
-│   ├── services/  
-│   │   ├── __init__.py  
-│   │   ├── chat_engine.py         # Chat functionality engine  
-│   │   ├── document_processing.py # Document ingestion & processing  
-│   │   ├── retrieval.py           # Information retrieval service  
-│   │   ├── feature.py             # Feature management  
-│   │   └── history.py             # Chat history management  
-│   │  
-│   ├── utils/  
-│   │   ├── __init__.py  
-│   │   ├── util.py                # Logger, constants  
-│   │   └── helpers.py             # Generic helper functions  
-│   │  
-│   ├── handlers/  
-│   │   ├── __init__.py  
-│   │   ├── chat_handler.py        # Chat request handling  
-│   │   └── ingestion_handler.py   # Document ingestion handling  
-│   │  
-│   ├── prompts/  
-│   │   └── system_prompts.json    # System prompt templates  
-│   │  
-│   ├── testdocs/  
-│   │   ├── sample_doc.pdf  
-│   │   ├── test.pdf  
-│   │   ├── test.csv  
-│   │   └── test.png  
-│   │  
-│   └── tests/  
-│       ├── __init__.py  
-│       ├── test_chat.py               # Chat functionality tests  
-│       ├── test_document_processing.py # Document processing tests  
-│       ├── test_feature.py            # Feature tests  
-│       ├── test_history.py            # History management tests  
-│       └── test_image.py              # Image processing tests  
-│  
-├── infrastructure/  
-│   └── cloudFormation.yaml        # AWS CloudFormation templates  
-│  
-├── scripts/  
-│   ├── run_local.py               # Local development server  
-│   ├── invoke_core_lambda.py      # Lambda function invoker  
-│   └── cognito_lambda.py          # Cognito authentication scripts  
-│  
-├── requirements.txt           # Python dependencies  
-├── .gitignore                # Git ignore patterns  
-├── .env.example              # Environment variables template  
-└── README.md                 # Project documentation  
+A production-ready RAG (Retrieval-Augmented Generation) application built with FastAPI and AWS Bedrock. This application provides a modular architecture for building chat interfaces with document context, history management, and LLM integration.
 
+## Features
 
-# Document Processing
-This file explains how to run the document ingestion/processing module locally.
+- **FastAPI Backend**: High-performance, easy-to-use API framework.
+- **AWS Bedrock Integration**: Uses Claude (via Bedrock) for LLM capabilities.
+- **RAG Architecture**: Integrated retrieval system for document context.
+- **Chat Orchestration**: Manages conversation flow, history, and context injection.
+- **Modular Design**: Separate services for history, retrieval, and chat logic.
+- **Extensible**: Easy to add new features or swap components (e.g., vector stores, databases).
 
-## Purpose
-`app.services.document_processing` ingests documents, chunks them, computes embeddings, and stores metadata/results for the RAG pipeline.
+## Project Structure
+
+```
+bedrock_genai/
+├── app/
+│   ├── main.py                # FastAPI entry point
+│   ├── models/                # Data models (Pydantic, Bedrock client)
+│   ├── services/              # Core logic (Chat, History, Retrieval)
+│   ├── utils/                 # Helper functions
+│   └── ...
+├── tests/                     # Unit and integration tests
+├── requirements.txt           # Dependencies
+└── README.md                  # Documentation
+```
 
 ## Prerequisites
-- Python 3.10+ (or your project Python)
-- Virtual environment (recommended)
-- AWS credentials configured if using S3 / DynamoDB / Bedrock
 
-## Setup (one-time)
-git clone <your-repo-url>
-cd bedrock-testing
+- Python 3.10+
+- AWS Account with Bedrock access enabled (specifically for Claude models)
+- AWS Credentials configured locally (or via IAM roles)
 
-python -m venv venv
-# mac/linux
-source venv/bin/activate
-# windows (PowerShell)
-venv\Scripts\activate
+## Installation
 
-pip install -r requirements.txt
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd bedrock-testing
+   ```
 
-# Environment variables
+2. **Create and activate a virtual environment:**
+   ```bash
+   python -m venv venv
+   # Windows
+   .\venv\Scripts\activate
+   # Linux/Mac
+   source venv/bin/activate
+   ```
 
-Create a .env in the project root (do NOT commit). Example:
-AWS_ACCESS_KEY_ID=xxx
-AWS_SECRET_ACCESS_KEY=xxx
-AWS_REGION=us-east-1
-MODEL_ID=anthropic.claude-v2
-S3_BUCKET=my-bucket
-DYNAMO_TABLE=my-table
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
+4. **Environment Setup:**
+   Create a `.env` file in the root directory:
+   ```env
+   AWS_ACCESS_KEY_ID=your_access_key
+   AWS_SECRET_ACCESS_KEY=your_secret_key
+   AWS_REGION=us-east-1
+   MODEL_ID=anthropic.claude-v2
+   ```
 
-# Run document processing (always from project root)
+## Running the Application
 
-Important: run as a module so app package imports resolve correctly.
+Start the FastAPI server:
+```bash
+uvicorn app.main:app --reload
+```
 
-#From project root (bedrock-testing/)
-python -m app.services.document_processing
+The API will be available at `http://localhost:8000`.
+Interactive API documentation (Swagger UI) is at `http://localhost:8000/docs`.
 
+## Testing
 
+Run the mock tests (no AWS credentials required):
+```bash
+python tests/test_api_mock.py
+```
 
-# Other modules on the way..
+## API Endpoints
+
+### POST /chat
+Send a message to the chat engine.
+
+**Request Body:**
+```json
+{
+  "message": "What is RAG?",
+  "chat_id": "optional-uuid",
+  "system_prompt": "optional-system-prompt",
+  "feature": "qna"
+}
+```
+
+**Response:**
+```json
+{
+  "response": "RAG stands for...",
+  "chat_id": "uuid",
+  "history": [...]
+}
+```
+
+### GET /health
+Health check endpoint.

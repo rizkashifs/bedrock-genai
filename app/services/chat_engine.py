@@ -33,7 +33,8 @@ class ChatEngine:
     """
     
     def __init__(self, chat_id: str, system_prompt: Optional[str] = None, mode: ModeType = "api", 
-                 use_dynamo: bool = True, metadata: Optional[Dict[str, Any]] = None):
+                 use_dynamo: bool = True, metadata: Optional[Dict[str, Any]] = None,
+                 existing_history: Optional[List[Dict[str, str]]] = None):
         """
         Initialize the chat engine.
         
@@ -43,6 +44,7 @@ class ChatEngine:
             mode: Operation mode - "api" for structured JSON responses, "chat" for conversational
             use_dynamo: Whether to use DynamoDB for persistent storage
             metadata: Optional metadata to store with the chat (user_id, feature, etc.)
+            existing_history: Optional existing history to load
         """ 
        
         self.chat_id = chat_id
@@ -58,8 +60,8 @@ class ChatEngine:
             # Load existing conversation history from DynamoDB
             self.conversation_history = self.dynamo_storage.get_chat_history(chat_id)
         else:
-            # In-memory storage only
-            self.conversation_history: List[Dict[str, str]] = []
+            # In-memory storage only (or injected)
+            self.conversation_history: List[Dict[str, str]] = existing_history if existing_history is not None else []
         
         # Track session-only exchanges (not yet saved to DynamoDB)
         self.session_exchanges: List[Dict[str, str]] = []

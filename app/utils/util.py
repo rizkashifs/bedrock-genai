@@ -2,7 +2,8 @@
 
 # Model Selection
 #modelId = "us.anthropic.claude-3-7-sonnet-20250219-v1:0"
-modelId = "us.anthropic.claude-3-5-haiku-20241022-v1:0"
+#modelId = "us.anthropic.claude-3-5-haiku-20241022-v1:0"
+modelId = "us.anthropic.claude-3-haiku-20240307-v1:0"
 modelType = "sonnet" if "sonnet" in modelId else "haiku"
 
 

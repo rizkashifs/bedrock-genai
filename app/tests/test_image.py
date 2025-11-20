@@ -12,7 +12,7 @@ from app.utils.util import logger, modelId
 from app.models.bedrock_client import invoke_claude_messages # Import the function you provided
 
 # --- Configuration ---
-IMAGE_PATH = r"C:\Users\admin\Downloads\bedrock-testing\app\test.png" #  UPDATE THIS PATH 
+IMAGE_PATH = r"C:\Users\admin\Downloads\bedrock-testing\app\testdocs\test.png" #  UPDATE THIS PATH 
 USER_QUESTION = "Describe the contents of this image and identify any text you see."
 # ---------------------
 
