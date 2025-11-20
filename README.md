@@ -1,4 +1,4 @@
-Repo with the Backend structure of a Typical GenAI Rag App using Bedrock
+Repo with the Backend structure of a Typical GenAI Rag App using AWS Bedrock (or any Framework)
 
 # Repo Structure  
 bedrock_genai/  
