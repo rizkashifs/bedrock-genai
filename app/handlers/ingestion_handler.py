@@ -35,21 +35,30 @@ def handle_ingestion(event: Dict[str, Any]) -> Dict[str, Any]:
     # ── Resolve file path ──────────────────────────────────────────────────
     if not file_path:
         if not bucket or not key:
-            raise ValueError(
-                "Provide either 'file_path' (local) or both 's3_bucket' and 's3_key'."
-            )
+            return {
+                "statusCode": 400,
+                "body": {"error": "Provide either 'file_path' (local) or both 's3_bucket' and 's3_key'."},
+            }
         # TODO: download from S3 to a temp path and set file_path
-        raise NotImplementedError(
-            "S3 download is not yet implemented. Pass 'file_path' for local files."
-        )
+        return {
+            "statusCode": 501,
+            "body": {"error": "S3 download is not yet implemented. Pass 'file_path' for local files."},
+        }
 
     if not user_prompt:
-        raise ValueError("Missing required parameter: user_prompt")
+        return {
+            "statusCode": 400,
+            "body": {"error": "Missing required parameter: user_prompt"},
+        }
 
-    logger.info("Ingestion requested. file=%s prompt=%s", file_path, user_prompt[:60])
+    logger.info("Ingestion requested. file=%s", file_path)
 
     # ── Process the file ───────────────────────────────────────────────────
-    result = process_file(file_path, user_question=user_prompt)
+    try:
+        result = process_file(file_path, user_question=user_prompt)
+    except Exception as exc:
+        logger.error("process_file failed: %s", exc)
+        return {"statusCode": 500, "body": {"error": str(exc)}}
 
     if result["status"] == "error":
         return {

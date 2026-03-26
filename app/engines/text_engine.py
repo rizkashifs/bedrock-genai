@@ -308,8 +308,13 @@ class TextEngine:
             f"post_filters={post_filters}, top_k={top_k}"
         )
 
+        # Extract keywords first so the validation can consider them
+        keywords = self._extract_keywords(semantic_plan)
+        logger.info(f"Extracted keywords: {keywords}")
+
         # ── basic validation ─────────────────────────────────────────────────
-        if not query_text.strip() and not id_filters:
+        # Refuse only if there is nothing at all to search with
+        if not query_text.strip() and not id_filters and not keywords:
             return self._refusal_payload(
                 "No search text or ID filters were provided.",
                 schema_context=schema_context,
@@ -318,9 +323,6 @@ class TextEngine:
                     "Or provide an ID (e.g. employee_id = 1234) to scope the search.",
                 ],
             )
-
-        keywords = self._extract_keywords(semantic_plan)
-        logger.info(f"Extracted keywords: {keywords}")
 
         all_rows: List[Dict[str, Any]] = []
         processing_issues: List[str] = []
@@ -384,13 +386,14 @@ class TextEngine:
             # ── step 2: resolve text columns to search ───────────────────────
             resolved_text_cols = self._resolve_columns(working_df, target_text_columns)
 
-            # Fallback: use all object/string columns if none resolved
+            # Fallback: use all string/object columns if none resolved
+            # pd.api.types.is_string_dtype covers object, string, str (pandas 3.0+)
             if not resolved_text_cols:
                 resolved_text_cols = [
                     col
                     for col in working_df.columns
-                    if working_df[col].dtype == object
-                    or str(working_df[col].dtype) == "string"
+                    if pd.api.types.is_string_dtype(working_df[col])
+                    or pd.api.types.is_object_dtype(working_df[col])
                 ]
                 logger.info(
                     f"No target columns resolved; falling back to all text columns: {resolved_text_cols}"
