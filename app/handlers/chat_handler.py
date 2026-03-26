@@ -75,23 +75,27 @@ def handle_chat(event: Dict[str, Any]) -> Dict[str, Any]:
         }
 
     # Route 3: Plain multi-turn conversation
-    system_prompt = get_system_prompt(feature, mode=mode)  # type: ignore[arg-type]
-    engine = ChatEngine(
-        chat_id=chat_id,
-        system_prompt=system_prompt,
-        mode=mode,  # type: ignore[arg-type]
-        use_dynamo=False,
-    )
-    for turn in history_service.get_history(chat_id):
-        engine.conversation_history.append(turn)
+    try:
+        system_prompt = get_system_prompt(feature, mode=mode)  # type: ignore[arg-type]
+        engine = ChatEngine(
+            chat_id=chat_id,
+            system_prompt=system_prompt,
+            mode=mode,  # type: ignore[arg-type]
+            use_dynamo=False,
+        )
+        for turn in history_service.get_history(chat_id):
+            engine.conversation_history.append(turn)
 
-    answer = engine.send_message(query)
-    history_service.add_turn(chat_id, query, answer)
+        answer = engine.send_message(query)
+        history_service.add_turn(chat_id, query, answer)
 
-    return {
-        "statusCode": 200,
-        "body": {"answer": answer, "chat_id": chat_id, "question_type": "general"},
-    }
+        return {
+            "statusCode": 200,
+            "body": {"answer": answer, "chat_id": chat_id, "question_type": "general"},
+        }
+    except Exception as exc:
+        logger.error("Chat engine error: %s", exc)
+        return {"statusCode": 500, "body": {"error": str(exc)}}
 
 
 # ── Private helpers ────────────────────────────────────────────────────────

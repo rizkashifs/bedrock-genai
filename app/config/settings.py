@@ -6,14 +6,21 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Optional
 
-from pydantic import Field
-from pydantic_settings import BaseSettings
+from pydantic import AliasChoices, Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        case_sensitive=False,
+        extra="ignore",
+    )
+
     # ── Application ────────────────────────────────────────────────────────
     app_name: str = "Bedrock GenAI RAG"
-    environment: str = Field(default="local", description="local | staging | production")
+    environment: str = Field(default="local")
     debug: bool = False
 
     # ── Storage paths ──────────────────────────────────────────────────────
@@ -22,25 +29,29 @@ class Settings(BaseSettings):
     logs_dir: Path = base_dir / "logs"
 
     # ── AWS / Bedrock ──────────────────────────────────────────────────────
-    aws_access_key_id: Optional[str] = Field(default=None, env="AWS_ACCESS_KEY_ID")
-    aws_secret_access_key: Optional[str] = Field(default=None, env="AWS_SECRET_ACCESS_KEY")
-    aws_region: str = Field(default="us-east-2", env="AWS_REGION")
+    aws_access_key_id: Optional[str] = Field(
+        default=None,
+        validation_alias=AliasChoices("AWS_ACCESS_KEY_ID", "aws_access_key_id"),
+    )
+    aws_secret_access_key: Optional[str] = Field(
+        default=None,
+        validation_alias=AliasChoices("AWS_SECRET_ACCESS_KEY", "aws_secret_access_key"),
+    )
+    aws_region: str = Field(
+        default="us-east-2",
+        validation_alias=AliasChoices("AWS_REGION", "aws_region"),
+    )
 
     # Chat / generation model
     bedrock_model_id: str = Field(
         default="us.anthropic.claude-3-5-haiku-20241022-v1:0",
-        env="MODEL_ID",
-        description="Bedrock model ID for Claude invocations",
+        validation_alias=AliasChoices("MODEL_ID", "bedrock_model_id"),
     )
 
     # Titan embeddings model (used for RAG vector store)
-    titan_embed_model_id: str = Field(
-        default="amazon.titan-embed-text-v2:0",
-        description="Bedrock Titan Embeddings model ID",
-    )
+    titan_embed_model_id: str = "amazon.titan-embed-text-v2:0"
 
     # ── Model capability limits ────────────────────────────────────────────
-    # Derived from model type; used by ingestion and CSV truncation logic
     @property
     def model_type(self) -> str:
         return "sonnet" if "sonnet" in self.bedrock_model_id else "haiku"
@@ -55,17 +66,17 @@ class Settings(BaseSettings):
         return None if self.model_type == "sonnet" else 300
 
     # ── S3 / DynamoDB (optional persistence) ──────────────────────────────
-    s3_bucket: Optional[str] = Field(default=None, env="S3_BUCKET")
-    dynamo_table: Optional[str] = Field(default=None, env="DYNAMO_TABLE")
+    s3_bucket: Optional[str] = Field(
+        default=None,
+        validation_alias=AliasChoices("S3_BUCKET", "s3_bucket"),
+    )
+    dynamo_table: Optional[str] = Field(
+        default=None,
+        validation_alias=AliasChoices("DYNAMO_TABLE", "dynamo_table"),
+    )
 
     # ── Retrieval ──────────────────────────────────────────────────────────
     max_chunks_per_query: int = 20
-
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
-        extra = "ignore"
 
 
 @lru_cache
