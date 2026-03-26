@@ -1,39 +1,20 @@
-# util.py
+# util.py — re-exports for backwards compatibility.
+# New code should import directly from app.config.settings or app.utils.logger.
 
-# Model Selection
-#modelId = "us.anthropic.claude-3-7-sonnet-20250219-v1:0"
-modelId = "us.anthropic.claude-3-5-haiku-20241022-v1:0"
-modelType = "sonnet" if "sonnet" in modelId else "haiku"
+from app.config.settings import settings
+from app.utils.logger import logger  # noqa: F401  (re-exported)
 
+# ── Model identifiers (kept for backwards compatibility) ───────────────────
+modelId: str = settings.bedrock_model_id
+modelType: str = settings.model_type
 
-## Manage model configurations for CSV row limits
+# ── Per-model limits ───────────────────────────────────────────────────────
 MODEL_CONFIG = {
-    "haiku": {"max_tokens": 4096, "max_rows": 300},
-    "sonnet": {"max_tokens": 200000, "max_rows": None}
+    "haiku": {"max_tokens": 4_096, "max_rows": 300},
+    "sonnet": {"max_tokens": 200_000, "max_rows": None},
 }
 
+
 def get_max_rows(model_type: str) -> int:
-    """Return max safe row count for CSV based on model type."""
+    """Return max safe CSV row count for the given model type."""
     return MODEL_CONFIG.get(model_type, {}).get("max_rows", 300)
-
-
-# Logging Util
-import logging
-
-
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('rag_system.log'),
-        logging.StreamHandler()
-    ]
-)
-
-logger = logging.getLogger(__name__)
-
-
-
-
-
-
